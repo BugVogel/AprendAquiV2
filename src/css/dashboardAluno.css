@@ -1,0 +1,40 @@
+
+
+.containerPerfil {
+
+
+    background-color:#f9f9f9;
+ 
+    color: black;
+    text-align: center;
+   
+}
+
+
+.perfilPic{
+
+   
+
+}
+
+.perfilProfPic{
+    border-radius:100px;
+}
+
+.containerProfList {
+
+    color: white;
+    background-color: #a8d3ff;
+    border-radius: 10px;
+
+}
+
+.checked{
+    color:orange;
+}
+
+.messagensContainer{
+
+    background-color:#f9f9f9;
+
+}
