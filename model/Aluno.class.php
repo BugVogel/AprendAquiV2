@@ -10,6 +10,8 @@ class Aluno {
     private $cpf;
     private $password;
     private $picture;
+    private $first_msg;
+    private $isMatch;
     
     
     function __construct( $id, $name, $email, $phone, $cpf, $password, $picture){
@@ -61,6 +63,27 @@ class Aluno {
         return $this->picture;
     }
 
+
+    public function setFirstMessage($msg){
+
+        $this->first_msg = $msg;
+
+    }
+
+    public function getFirstMessage(){
+        return $this->first_msg;
+    }
+
+
+    public function setIsMatch($isMatch){
+
+        $this->isMatch = $isMatch;
+
+    }
+
+    public function getIsMatch(){
+        return $this->isMatch;
+    }
 
 
 

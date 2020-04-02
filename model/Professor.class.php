@@ -15,6 +15,8 @@ class Professor {
     private $address;
     private $description;
     private $path_picture;
+    private $first_msg;
+    private $isMatch;
 
 
 
@@ -30,6 +32,8 @@ class Professor {
     $this->address = $address;
     $this->description = $description;
     $this->path_picture = $path_picture;
+    
+ 
 
     }
 
@@ -70,10 +74,27 @@ class Professor {
         return $this->path_picture;
     }
 
+  
+    public function setFirstMessage($msg){
+
+        $this->first_msg = $msg;
+
+    }
+
+    public function getFirstMessage(){
+        return $this->first_msg;
+    }
 
 
+    public function setIsMatch($isMatch){
 
+        $this->isMatch = $isMatch;
 
+    }
+
+    public function getIsMatch(){
+        return $this->isMatch;
+    }
 
 
 

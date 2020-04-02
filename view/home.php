@@ -118,7 +118,7 @@
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-md-12 col-7">
                                     <?php require_once 'especialidades.php';?>
                                 </div>
                             </div>

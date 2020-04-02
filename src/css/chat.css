@@ -1,0 +1,17 @@
+
+
+  .messages {
+
+    
+ 
+    border: 1px solid rgb(136, 136, 136);
+    height: 200px;
+    font-size: 12px;
+    border-radius: 3px;
+    color:black;
+  }
+
+
+  .message{
+    color:black
+  }

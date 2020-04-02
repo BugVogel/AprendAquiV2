@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chat Teste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <link type="text/css" rel="stylesheet"  href="style.css">
+</head>
+<body>
+    
+    <form id="chat">
+        <input type="text" name="username" placeholder="Digite seu usuário">
+        <div class="messages">   </div>
+        <input type="text" name="message" placeholder="Digite sua mensagem">
+        <button type="submit">Enviar</button>
+
+    </form>
+    <script type="text/javascript">
+
+
+        //var port = process.env.PORT || 8080;
+        var socket = io('https://chatavaa.herokuapp.com');
+
+
+
+        socket.on('receivedMessage', function(message){
+            renderMessage(message);
+        })
+
+
+        socket.on('previousMessage', function(messages){
+
+            for( message of messages){
+
+                renderMessage(message);
+            }
+
+        })
+
+        function renderMessage(message){
+            
+            $('.messages').append('<div class="message"><strong>'+message.auth+'</strong>:'+message.message+'</div>');
+
+        }
+
+        $('#chat').submit(function(event){
+
+            event.preventDefault();
+            var auth = $('input[name=username]').val();
+            var message = $('input[name=message]').val();
+
+
+            if(auth.length && message.length){
+
+                var messageObject = {
+                    auth: auth,
+                    message: message,
+
+                };
+
+                renderMessage(messageObject);
+                socket.emit('sendMessage', messageObject);
+
+            }
+
+
+        })
+
+
+
+    </script>
+
+
+</body>
+</html>

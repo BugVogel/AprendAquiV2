@@ -117,6 +117,38 @@ if(isset($_POST['match'])){
 
 }
 
+if(isset($_POST['updateProfessor'])){
+
+
+    if($controller->updateProfessor($_POST)){
+        echo "<script>alert('Informações atualizadas!')</script>";
+    }
+    else{
+        echo "<script>alert('Ops! Houve algum problema')</script>";
+    }
+
+
+    echo "<meta http-equiv='refresh' content='0,url=../view/dashboardProfessor.php' > ";
+
+}
+
+
+if(isset($_POST['updateAluno'])){
+
+    
+    if($controller->updateAluno($_POST)){
+        echo "<script>alert('Informações atualizadas!')</script>";
+    }
+    else{
+        echo "<script>alert('Ops! Houve algum problema')</script>";
+    }
+
+    echo "<meta http-equiv='refresh' content='0,url=../view/dashboardAluno.php' > ";
+
+    
+}
+
+
 
 
 if(isset($_POST['refuseMatch'])){

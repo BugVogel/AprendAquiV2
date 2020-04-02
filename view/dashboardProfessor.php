@@ -33,7 +33,7 @@ $professor = $controller->getProfessor($_SESSION['email']);
 
 
     <link   rel="stylesheet" href="../vendors/bootstrapcss/bootstrap.min.css" />
-
+    <link  rel="stylesheet" href="../src/css/chat.css"/>
     <link  rel="stylesheet" href="../src/css/dashboardProfessor.css"/>
     <link   rel="stylesheet" href="../vendors/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -49,7 +49,7 @@ $professor = $controller->getProfessor($_SESSION['email']);
         <div class="row">
         
             <br><br>          
-            <div class="col-3 containerPerfilProf "> 
+            <div class="col-md-3 col-12 containerPerfilProf "> 
                 <div class="row">
                     <div class="col-12 ">
                         <br>
@@ -69,12 +69,80 @@ $professor = $controller->getProfessor($_SESSION['email']);
                         <p>Especialidade: <?php echo $professor->getEspecialidade()?></p>
                         <p>Email: <?php echo $professor->getEmail()?></p>
                         <p>Telefone: <?php echo $professor->getPhone()?></p>
-                        <button class="btn btn-secondary btn-block">Configurações</button>
+                        <button type="button" data-target="#modalConfig" data-toggle="modal"class="btn btn-secondary btn-block">Configurações</button>
+
+                        <div id="modalConfig" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Editar informações</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="../routes/routes.php?updateProfessor">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <label><strong>Nome</strong></label>
+                                                    <input  type="text" name="name" value="<?php echo $professor->getName() ?>"class="form-control" placeholder="Nome" required/>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <label><strong>Email</strong></label>
+                                                    <input  type="text" name="email" value="<?php echo $professor->getEmail() ?>" class="form-control" placeholder="Email" required/>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12 col-7">
+                                                    <label><strong>Especialidade</strong></label>
+                                                    <?php require_once 'especialidades.php';?>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <label><strong>Telefone</strong></label>
+                                                    <input  type="text" name="phone" value="<?php echo $professor->getPhone() ?>" class="form-control" placeholder="Telefone" required/>
+                                                </div>
+                                             
+                                                
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <label><strong>Endereço</strong></label>
+                                                    <input  type="text" name="address" class="form-control" value="<?php echo $professor->getAddress() ?>" placeholder="Endereço" required/>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            
+                                            
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <label><strong>Descrição</strong></label>
+                                                    <textarea  type="text" name="description" rows="5"  class="form-control" placeholder="Descreva suas habilidades" required ><?php echo $professor->getDescription() ?></textarea>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="updateProfessor" class="btn btn-primary btn-block">Salvar mudanças</button>
+                                        
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <br><br>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-md-6 col-12 ">
                 <div class="col-12"><h4>Bem vindo <?php echo $professor->getName(); ?></h4></div>
                 <br>
                 <div class="row">
@@ -111,7 +179,6 @@ $professor = $controller->getProfessor($_SESSION['email']);
                                             <h5><?php echo $aluno->getName()?></h5>
                                             <p><?php echo $matchMsg;?></p>
                                             <button type="submit"  value="<?php echo $aluno->getId(); ?>"name="match"class="btn btn-danger">Match</button>
-                                            <button type="button" class="btn btn-light">Negociar</button>
                                             <button type="submit" value="<?php echo $aluno->getId(); ?>"name="refuseMatch"class="btn btn-secondary">Recusar</button>
                                         </div>
                                     </div>
@@ -135,7 +202,7 @@ $professor = $controller->getProfessor($_SESSION['email']);
                     </form>
 
                     <?php }else { ?>
-                      <div class="col-12 ">
+                    <div class="col-12 ">
                         <div class="alert alert-dark" role="alert">
                             Não existem solicitações de Match no momento.
                         </div>
@@ -147,17 +214,81 @@ $professor = $controller->getProfessor($_SESSION['email']);
                 
             </div>
                 
-            <div class="col-3 messagensContainer">
+            <!-- Enviar e receber mensagens-->
+                <div class="col-md-3 col-12 messagensContainer">
                     <div class="col-12"><h5>Mensagens <i class="fa fa-comments" aria-hidden="true"></i></h5></div>
-                    <div class="overflow-auto">
+                    <div >
                         <div class="list-group" id="list-tab" role="tablist">
-                            <a class="isMatch list-group-item list-group-item-action " id="list-home-list" data-target="#" data-toggle="modal" href="#" role="tab" aria-controls="home">João Fulano</a>
+                            <?php  $alunos = $controller->getStudantsConversation($professor);?>
+                            <input type="hidden" id="idUsuario" value="<?php echo $professor->getId()?>" />
+                            <?php if($alunos){
+                                    for($i=0; $i<sizeof($alunos); $i++){ ?>
+                                        <a class="<?php echo  $alunos[$i]->getIsMatch() ? "isMatch" : "" ?> list-group-item list-group-item-action borderRadius " id="list-home-list" data-target="#modal<?php echo $i?>" data-toggle="modal" href="#" role="tab" aria-controls="home"><?php echo $alunos[$i]->getName()?></a>
+                                        
+                                    <div style="color:black" id="modal<?php echo $i?>"class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                               
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Chat de negociação com <?php echo $alunos[$i]->getName()?></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="offset-1 col-10">
+                                                            <h5>Mensagem inicial do estudante: <br></h5>
+                                                            <p style="text-align:justify"><?php echo $alunos[$i]->getFirstMessage() ?></p>
+                                                        </div>
+                                                    </div>
+                                                    <form  class="chat">
+                                                        <div class="row">
+                                                            <div class="offset-1 col-10">
+                                                                <div id="messages<?php echo $alunos[$i]->getId() ?>" class="messages pre-scrollable">   </div>
+                                                            </div>
+                                                            <input type="hidden" name="idAuth" value="<?php echo $professor->getId()?>"/>
+                                                            <input type="hidden" name="idDestiny" value="<?php echo $alunos[$i]->getId()?>"/>
+                                                            <input type="hidden" name="nameAuth"  value="<?php echo $professor->getName()?>"/>
+                                                            <input type="hidden" name="nameDestiny"  value="<?php echo $alunos[$i]->getName()?>"/>
+                                                        </div>
+                                                        <br>
+
+                                                        <div class="row">
+
+                                                            <div class="offset-1 col-10">
+                                                                <div class="input-group mb-3">
+                                                                    <textarea name="message" type="text" class="form-control" placeholder="Enviar uma mensagem de Match" ></textarea>
+                                                                    <div class="input-group-append">
+                                                                        <button style="background-color:#ddd;border:none" class="btn btn-outline-secondary"  type="submit">Enviar</button>
+                                                                    </div>
+                                                                </div>
+                                                                <br><br>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <?php }?>
+                                <?php } else {?>
+                                <div class="col-12 ">
+                                    <div class="alert alert-dark" role="alert">
+                                        Não existem conversações no momento.
+                                    </div>
+                                </div>
+                            <?php }?>
                         </div>
                     </div>
-            </div>
+                </div>
+            <!-- Fim de Enviar e receber mensagens-->
+
+
         </div>
-
-
+        <!-- Fim da row principal -->
+       
     
 
 
@@ -167,6 +298,8 @@ $professor = $controller->getProfessor($_SESSION['email']);
 <script src="../chart/node_modules/chart.js/dist/Chart.js"></script>
 <script src="../vendors/js/jquery/jquery.min.js"></script>
 <script src ="../vendors/js/bootstrapjs/bootstrap.min.js"></script> 
+<script src="../vendors/js/socket/socket.io.js"></script>
+<script src="../src/js/chat.js"></script>
 
 
 <script>
@@ -178,7 +311,7 @@ $professor = $controller->getProfessor($_SESSION['email']);
     var chartDataMatchs = {
     labels: ["S", "T", "Q", "Q", "S", "S", "D"],
     datasets: [{
-        data: [45, 25, 20, 10,25,50,10],
+        data: [10, 5, 2, 1,2,8,4],
         backgroundColor: [
            '#6ffd8c',
              '#36a2eb',

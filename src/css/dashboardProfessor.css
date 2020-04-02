@@ -22,6 +22,12 @@
 
     color:white;
     background-color: #f97878;
+    border-radius:3px;
  
+}
+
+.borderRadius{
+    border-radius:3px;
+
 }
 

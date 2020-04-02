@@ -121,6 +121,73 @@ class Controller {
 
  }
 
+ 
+ function getStudantsConversation( $professor){
+
+   $id = $professor->getId();
+
+   $query = mysql_query("SELECT*FROM `aluno_professor_match` WHERE `idProfessor`='$id'");
+   $alunos = [];
+
+   if( mysql_num_rows($query) > 0){
+
+      while( $match = mysql_fetch_array($query)){
+
+         $idAluno = $match['idAluno'];
+         $query2 = mysql_query("SELECT*FROM `alunos` WHERE `id`=$idAluno");
+         $aluno = mysql_fetch_array($query2);
+
+         $aluno = new Aluno($aluno['id'],$aluno['name'],$aluno['email'], $aluno['phone'], $aluno['cpf'], $aluno['password'], $aluno['picture']);
+         $aluno->setFirstMessage($match['msgMatch']);
+         $aluno->setIsMatch($match['isMatch']);
+         $alunos[] = $aluno;
+      }
+
+      return $alunos;
+
+   }
+   else{
+
+      return false;
+   }
+
+
+ }
+
+
+ function getProfessorsConversation( $aluno){
+
+   $id = $aluno->getId();
+
+   $query = mysql_query("SELECT*FROM `aluno_professor_match` WHERE `idAluno`='$id'");
+   $professores = [];
+
+   if( mysql_num_rows($query) > 0){
+
+      while( $match = mysql_fetch_array($query)){
+
+         $idProfessor = $match['idProfessor'];
+         $query2 = mysql_query("SELECT*FROM `professores` WHERE `id`=$idProfessor");
+         $professor = mysql_fetch_array($query2);
+
+     
+         $professor = new Professor($professor['id'],$professor['name'],$professor['email'],$professor['phone'], $professor['especialidade'], $professor['password'], $professor['address'], $professor['description'], $professor['picture']);
+         $professor->setFirstMessage($match['msgMatch']);
+         $professor->setIsMatch($match['isMatch']);
+         $professores[] = $professor;
+      }
+
+      return $professores;
+
+   }
+   else{
+
+      return false;
+   }
+
+
+ }
+
 
  function getProfessoresNotMatched(){
 
@@ -233,6 +300,50 @@ class Controller {
    return mysql_query("DELETE FROM `aluno_professor_match` WHERE `idAluno`='$idAluno' AND `idProfessor`='$idProfessor'");
 
  }
+
+
+
+ function updateAluno($post){
+
+   $id = $_SESSION['id'];
+
+
+   $name = $post['name'];
+   $email = $post['email'];
+   $phone = $post['phone'];
+   $cpf = $post['cpf'];
+
+   $_SESSION['email']= $email;
+
+
+   return mysql_query("UPDATE `alunos` SET `name`='$name', `email`='$email', `phone`='$phone', `cpf`= '$cpf'  WHERE `id`=$id ");
+
+
+
+ }
+
+
+ function updateProfessor($post){
+
+   $id = $_SESSION['id'];
+
+
+   $name = $post['name'];
+   $email = $post['email'];
+   $especialidade = $post['especialidade'];
+   $address = $post['address'];
+   $phone = $post['phone'];
+   $description = $post['description'];
+
+   $_SESSION['email']= $email;
+
+
+   return mysql_query("UPDATE `professores` SET `name`='$name', `email`='$email',`especialidade`='$especialidade', `address`='$address',`phone`='$phone', `description`= '$description'  WHERE `id`=$id ");
+
+
+
+
+}
 
 
 
